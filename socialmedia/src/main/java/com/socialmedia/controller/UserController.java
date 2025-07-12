@@ -67,7 +67,7 @@ public class UserController {
         {
             throw new Exception("user not found for id "+myid);
         }
-         userRepository.delete(findUser.get());
+         userRepository.delete(findUser.get()); //delete
 
         return "user deleted with id "+myid;
     }

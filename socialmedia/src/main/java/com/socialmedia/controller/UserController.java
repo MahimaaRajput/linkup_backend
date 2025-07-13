@@ -33,14 +33,8 @@ public class UserController {
         return userRepository.findAll();
     }
     @GetMapping("user/id/{myid}")
-    public User getUserbyId(@PathVariable Integer myid) throws Exception
-    {
-       Optional <User> finduser = userRepository.findById(myid);
-       if(finduser.isPresent()) {
-           return finduser.get();
-       } else {
-           throw new Exception("user not exist with id "+myid);
-       }
+    public User getUserbyId(@PathVariable Integer myid) throws Exception {
+       return userService.findUserById(myid);
     }
 
     @PutMapping("user/id/{myid}")

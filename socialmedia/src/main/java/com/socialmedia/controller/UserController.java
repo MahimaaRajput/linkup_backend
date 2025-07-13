@@ -2,6 +2,7 @@ package com.socialmedia.controller;
 
 import com.socialmedia.model.User;
 import com.socialmedia.repository.UserRepository;
+import com.socialmedia.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,11 +18,13 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private UserService userService;
 
     @PostMapping("user")
     public User createUser(@RequestBody User thisuser)
     {
-        return userRepository.save(thisuser);
+        return userService.registerUser(thisuser);
     }
 
     @GetMapping("allusers")

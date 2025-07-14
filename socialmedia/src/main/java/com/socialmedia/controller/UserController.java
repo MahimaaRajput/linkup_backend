@@ -36,24 +36,15 @@ public class UserController {
     public User getUserbyId(@PathVariable Integer myid) throws Exception {
        return userService.findUserById(myid);
     }
+    @GetMapping("user/email/{email}")
+    public Optional<User> getUserByEmail(@PathVariable String email) throws Exception {
+        return userService.findUserByEmail(email);
+    }
 
     @PutMapping("user/id/{myid}")
     public User updateUser(@PathVariable int myid,@RequestBody User updateduser) throws Exception {
-        Optional<User> findUser = userRepository.findById(myid);
-        if (findUser.isEmpty()) {
-            throw new Exception("user not found with id " + myid);
-        }
-        User existingUser = findUser.get();
-        if (updateduser.getEmail() != null)
-            existingUser.setEmail(updateduser.getEmail());//which comes from postman
-        if (updateduser.getFirstName() != null)
-            existingUser.setFirstName(updateduser.getFirstName());
-        if (updateduser.getLastName() != null)
-            existingUser.setLastName(updateduser.getLastName());
-        if (updateduser.getPassword() != null) {
-            existingUser.setPassword(updateduser.getPassword());
-        }
-        return userRepository.save(existingUser);
+
+        return userService.updateUser(myid,updateduser);
     }
 
     @DeleteMapping("user/id/{myid}")

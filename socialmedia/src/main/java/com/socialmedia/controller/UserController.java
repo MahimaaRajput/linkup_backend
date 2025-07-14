@@ -50,7 +50,10 @@ public class UserController {
     public User followUser(@PathVariable Integer followerId,@PathVariable Integer followingId) throws Exception {
         return userService.followUser(followerId,followingId);
     }
-
+    @GetMapping("user/search")
+    public List<User> searchUser(@RequestParam("query") String query) {
+        return userService.searchUser(query);
+    }
     @DeleteMapping("user/id/{myid}")
     public String deleteUser(@PathVariable int myid) throws Exception
     {

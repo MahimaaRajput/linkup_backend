@@ -73,6 +73,6 @@ public class UserServiceImplement implements UserService {
 
     @Override
     public List<User> searchUser(String query) {
-        return List.of();
+        return userRepository.searchUser(query);
     }
 }

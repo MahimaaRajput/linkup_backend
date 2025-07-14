@@ -5,6 +5,7 @@ import com.socialmedia.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,8 +35,21 @@ public class UserServiceImplement implements UserService {
     }
 
     @Override
-    public User followUser(Integer userid1, Integer userid2) {
-        return null;
+    public User followUser(Integer followerId, Integer followingId) throws Exception {
+        User follower1=findUserById(followerId);
+        User following1=findUserById(followingId);
+//        null check & initialization
+        if (following1.getFollowers() ==null)
+            following1.setFollowers(new ArrayList<>());
+        if (follower1.getFollowing() == null)
+            follower1.setFollowing(new ArrayList<>());
+//        add to each other's list
+        following1.getFollowers().add(follower1.getId());
+        follower1.getFollowing().add(following1.getId());
+//        save both users
+        userRepository.save(follower1);
+        userRepository.save(following1);
+        return follower1;
     }
 
     @Override

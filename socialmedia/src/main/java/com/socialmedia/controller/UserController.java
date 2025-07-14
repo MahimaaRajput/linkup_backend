@@ -46,6 +46,10 @@ public class UserController {
 
         return userService.updateUser(myid,updateduser);
     }
+    @PutMapping("user/follow/{followerId}/{followingId}")
+    public User followUser(@PathVariable Integer followerId,@PathVariable Integer followingId) throws Exception {
+        return userService.followUser(followerId,followingId);
+    }
 
     @DeleteMapping("user/id/{myid}")
     public String deleteUser(@PathVariable int myid) throws Exception

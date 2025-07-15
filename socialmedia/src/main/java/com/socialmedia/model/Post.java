@@ -6,6 +6,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Post {
@@ -17,6 +19,29 @@ public class Post {
     private String video;
     private LocalDateTime createdAt;
     private User user;
+    private List<User> liked =new ArrayList<>();
+
+    public Post(String caption, LocalDateTime createdAt, Integer id, String image, List<User> liked, User user, String video) {
+        this.caption = caption;
+        this.createdAt = createdAt;
+        this.id = id;
+        this.image = image;
+        this.liked = liked;
+        this.user = user;
+        this.video = video;
+    }
+    public Post()
+    {
+
+    }
+
+    public List<User> getLiked() {
+        return liked;
+    }
+
+    public void setLiked(List<User> liked) {
+        this.liked = liked;
+    }
 
     public String getCaption() {
         return caption;
@@ -66,18 +91,8 @@ public class Post {
         this.video = video;
     }
 
-    public Post()
-    {
 
-    }
 
-    public Post(String caption, LocalDateTime createdAt, Integer id, String image, User user, String video) {
-        this.caption = caption;
-        this.createdAt = createdAt;
-        this.id = id;
-        this.image = image;
-        this.user = user;
-        this.video = video;
-    }
+
 }
 

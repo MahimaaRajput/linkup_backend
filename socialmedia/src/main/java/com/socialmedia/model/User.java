@@ -24,18 +24,20 @@ public class User {
     private String password;
     private List<Integer> followers = new ArrayList<>();
     private List<Integer> following=new ArrayList<>();
+    private List<Post> savedPost=new ArrayList<>();
 
-    public User(){
-
-    }
-    public User(Integer id, String firstName, String lastName, String email, String password, List<Integer> followers, List<Integer> following) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public User(String email, String firstName, List<Integer> followers, List<Integer> following, Integer id, String lastName, String password, List<Post> savedPost) {
         this.email = email;
-        this.password = password;
+        this.firstName = firstName;
         this.followers = followers;
         this.following = following;
+        this.id = id;
+        this.lastName = lastName;
+        this.password = password;
+        this.savedPost = savedPost;
+    }
+    public User(){
+
     }
 
     public String getEmail() {
@@ -92,6 +94,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+    public List<Post> getSavedPost() {
+        return savedPost;
+    }
+
+    public void setSavedPost(List<Post> savedPost) {
+        this.savedPost = savedPost;
     }
 
 

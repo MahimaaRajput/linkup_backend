@@ -25,7 +25,7 @@ public class PostController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-    @DeleteMapping("/delete/id/{postId}/{userId}")
+    @DeleteMapping("/delete/postid/{postId}/userid/{userId}")
     public ResponseEntity<ApiResponse> deletePost(@PathVariable Integer postId, @PathVariable Integer userId)
     {
         try

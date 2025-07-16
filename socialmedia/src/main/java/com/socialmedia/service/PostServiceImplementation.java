@@ -34,16 +34,16 @@ public class PostServiceImplementation implements PostService {
     public String deletePost(Integer postId, Integer userId) throws Exception {
        Post foundpost=findPostById(postId);
        User founduser=userService.findUserById(userId);
-       if(foundpost.getId()!=founduser.getId()){
-           throw new Exception("you are not allowed to delete");
+       if (foundpost.getUser() == null || !foundpost.getUser().getId().equals(userId)) {
+            throw new Exception("you are not allowed to delete");
        }
        postRepository.delete(foundpost);
-       return "post deleted with id"+foundpost;
+       return "post deleted with id "+ postId;
     }
 
     @Override
     public List<Post> findPostByUserId(Integer userId) {
-        return postRepository.findPostByUserId(userId);
+        return postRepository.findPostByByUserId(userId);
     }
 
     @Override

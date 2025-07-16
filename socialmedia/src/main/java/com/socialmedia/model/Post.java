@@ -1,9 +1,7 @@
 package com.socialmedia.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -18,7 +16,10 @@ public class Post {
     private String image;
     private String video;
     private LocalDateTime createdAt;
+    @ManyToOne
     private User user;
+    @JsonIgnore
+    @ManyToMany
     private List<User> liked =new ArrayList<>();
 
     public Post(String caption, LocalDateTime createdAt, Integer id, String image, List<User> liked, User user, String video) {

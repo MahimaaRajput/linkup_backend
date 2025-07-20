@@ -1,7 +1,7 @@
-package com.socialmedia.service;
+package com.LinkUp.service;
 
-import com.socialmedia.model.User;
-import com.socialmedia.repository.UserRepository;
+import com.LinkUp.model.User;
+import com.LinkUp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

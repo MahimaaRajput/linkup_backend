@@ -1,8 +1,8 @@
-package com.socialmedia.controller;
+package com.LinkUp.controller;
 
-import com.socialmedia.model.Post;
-import com.socialmedia.response.ApiResponse;
-import com.socialmedia.service.PostService;
+import com.LinkUp.model.Post;
+import com.LinkUp.response.ApiResponse;
+import com.LinkUp.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

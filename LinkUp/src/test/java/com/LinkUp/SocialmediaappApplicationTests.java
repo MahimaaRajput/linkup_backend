@@ -1,4 +1,4 @@
-package com.socialmedia;
+package com.LinkUp;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,4 +1,4 @@
-package com.socialmedia.response;
+package com.LinkUp.response;
 
 public class ApiResponse {
     private String message;

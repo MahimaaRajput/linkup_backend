@@ -1,4 +1,4 @@
-package com.socialmedia.model;
+package com.LinkUp.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

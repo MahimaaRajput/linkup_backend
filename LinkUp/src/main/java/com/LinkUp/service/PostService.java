@@ -1,6 +1,6 @@
-package com.socialmedia.service;
+package com.LinkUp.service;
 
-import com.socialmedia.model.Post;
+import com.LinkUp.model.Post;
 
 import java.util.List;
 

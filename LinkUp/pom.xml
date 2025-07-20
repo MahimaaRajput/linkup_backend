@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.mahima</groupId>
-	<artifactId>socialmedia</artifactId>
+	<artifactId>LinkUp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>socialmediaapp</name>
 	<description>social media project for Spring Boot</description>

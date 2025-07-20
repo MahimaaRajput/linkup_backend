@@ -1,13 +1,11 @@
-package com.socialmedia.controller;
+package com.LinkUp.controller;
 
-import com.socialmedia.model.User;
-import com.socialmedia.repository.UserRepository;
-import com.socialmedia.service.UserService;
+import com.LinkUp.model.User;
+import com.LinkUp.repository.UserRepository;
+import com.LinkUp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.SQLOutput;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

@@ -1,8 +1,6 @@
-package com.socialmedia.repository;
+package com.LinkUp.repository;
 
-import com.socialmedia.model.Post;
-import com.socialmedia.model.User;
-import jakarta.persistence.criteria.CriteriaBuilder;
+import com.LinkUp.model.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

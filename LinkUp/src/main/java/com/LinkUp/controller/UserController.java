@@ -37,14 +37,15 @@ public class UserController {
         return userService.findUserByEmail(email);
     }
 
-    @PutMapping("/api/user/id/{myid}")
-    public User updateUser(@PathVariable int myid,@RequestBody User updateduser) throws Exception {
-
-        return userService.updateUser(myid,updateduser);
+    @PutMapping("/api/user")
+    public User updateUser(@RequestHeader("Authorization")String jwt,@RequestBody User updateduser) throws Exception {
+        User reqUser=userService.findUserByJwt(jwt);
+        return userService.updateUser(reqUser.getId(),updateduser);
     }
-    @PutMapping("user/follow/{followerId}/{followingId}")
-    public User followUser(@PathVariable Integer followerId,@PathVariable Integer followingId) throws Exception {
-        return userService.followUser(followerId,followingId);
+    @PutMapping("/api/users/follow/{followingId}")
+    public User followUser(@RequestHeader("Authorization")String jwt,@PathVariable Integer followingId) throws Exception {
+        User reqUser=userService.findUserByJwt(jwt);
+        return userService.followUser(reqUser.getId(),followingId);
     }
     @GetMapping("user/search")
     public List<User> searchUser(@RequestParam("query") String query) {
@@ -61,6 +62,15 @@ public class UserController {
          userRepository.delete(findUser.get()); //delete
 
         return "user deleted with id "+myid;
+    }
+    @GetMapping("/api/users/profile")
+    public User getUserFromToken(@RequestHeader("Authorization")String jwt)
+    {
+        System.out.println("jwt--------"+jwt);
+        User user=userService.findUserByJwt(jwt);
+        user.setPassword(null);
+        return user;
+
     }
     }
 

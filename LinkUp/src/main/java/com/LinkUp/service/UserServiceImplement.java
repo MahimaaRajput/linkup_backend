@@ -1,5 +1,6 @@
 package com.LinkUp.service;
 
+import com.LinkUp.Config.JwtProvider;
 import com.LinkUp.model.User;
 import com.LinkUp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,21 +36,21 @@ public class UserServiceImplement implements UserService {
     }
 
     @Override
-    public User followUser(Integer followerId, Integer followingId) throws Exception {
-        User follower1=findUserById(followerId);
+    public User followUser(Integer reqUserId, Integer followingId) throws Exception {
+        User reqUser=findUserById(reqUserId);
         User following1=findUserById(followingId);
 //        null check & initialization
         if (following1.getFollowers() ==null)
             following1.setFollowers(new ArrayList<>());
-        if (follower1.getFollowing() == null)
-            follower1.setFollowing(new ArrayList<>());
+        if (reqUser.getFollowing() == null)
+            reqUser.setFollowing(new ArrayList<>());
 //        add to each other's list
-        following1.getFollowers().add(follower1.getId());
-        follower1.getFollowing().add(following1.getId());
+        following1.getFollowers().add(reqUser.getId());
+        reqUser.getFollowing().add(following1.getId());
 //        save both users
-        userRepository.save(follower1);
+        userRepository.save(reqUser);
         userRepository.save(following1);
-        return follower1;
+        return reqUser;
     }
 
     @Override
@@ -74,5 +75,12 @@ public class UserServiceImplement implements UserService {
     @Override
     public List<User> searchUser(String query) {
         return userRepository.searchUser(query);
+    }
+
+    @Override
+    public User findUserByJwt(String jwt) {
+        String email= JwtProvider.getEmailFromToken(jwt);
+        User user=userRepository.findByEmail(email);
+        return user;
     }
 }

@@ -22,7 +22,7 @@ public class Post {
     @ManyToOne
     private User user;
     @JsonIgnore
-    @ManyToMany
+    @OneToMany
     private List<User> liked =new ArrayList<>();
 
     public Post(String caption, LocalDateTime createdAt, Integer id, String image, List<User> liked, User user, String video) {

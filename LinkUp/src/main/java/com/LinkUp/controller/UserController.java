@@ -19,23 +19,21 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("user")
-    public User createUser(@RequestBody User thisuser)
-    {
-        return userService.registerUser(thisuser);
-    }
+
 
     @GetMapping("/api/allusers")
     public List<User> getusers()
     {
         return userRepository.findAll();
     }
-    @GetMapping("/api/user/id/{myid}")
+
+    @GetMapping("user/id/{myid}")
     public User getUserbyId(@PathVariable Integer myid) throws Exception {
        return userService.findUserById(myid);
     }
+    
     @GetMapping("/api/user/email/{email}")
-    public Optional<User> getUserByEmail(@PathVariable String email) throws Exception {
+    public User getUserByEmail(@PathVariable String email) throws Exception {
         return userService.findUserByEmail(email);
     }
 

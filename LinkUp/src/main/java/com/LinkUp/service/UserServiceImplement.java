@@ -30,7 +30,7 @@ public class UserServiceImplement implements UserService {
     }
 
     @Override
-    public Optional<User> findUserByEmail(String email) throws Exception {
+    public User findUserByEmail(String email) throws Exception {
         return userRepository.findByEmail(email);
     }
 

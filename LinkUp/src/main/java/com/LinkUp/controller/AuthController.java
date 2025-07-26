@@ -7,7 +7,10 @@ import com.LinkUp.request.LoginRequest;
 import com.LinkUp.response.AuthResponse;
 import com.LinkUp.service.CustomUserDetailsService;
 import com.LinkUp.service.UserService;
+import org.hibernate.mapping.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,6 +20,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Collections;
 
 
 @RestController
@@ -51,14 +56,20 @@ public class AuthController {
 
     }
     @PostMapping("signin")
-    public AuthResponse signIn(@RequestBody LoginRequest loginRequest )
+    public ResponseEntity<?> signIn(@RequestBody LoginRequest loginRequest )
     {
-     Authentication authentication= authenticate(loginRequest.getEmail(),loginRequest.getPassword());
+        try {
+            Authentication authentication = authenticate(loginRequest.getEmail(), loginRequest.getPassword());
 
 
-        String token = JwtProvider.generateToken(authentication);
-        AuthResponse res=new AuthResponse(token,"login success");
-        return res;
+            String token = JwtProvider.generateToken(authentication);
+            AuthResponse res = new AuthResponse(token, "login success");
+            return ResponseEntity.ok(res);
+        }
+        catch (BadCredentialsException ex) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Collections.singletonMap("message", ex.getMessage()));
+        }
 
     }
 

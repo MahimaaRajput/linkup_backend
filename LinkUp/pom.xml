@@ -11,7 +11,7 @@
 	<groupId>com.mahima</groupId>
 	<artifactId>LinkUp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>socialmediaapp</name>
+	<name>linkUp</name>
 	<description>social media project for Spring Boot</description>
 	<url/>
 	<licenses>
@@ -48,6 +48,7 @@
 			<version>1.18.38</version>
 			<scope>provided</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -92,11 +93,13 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.11.0</version>
 				<configuration>
 					<annotationProcessorPaths>
 						<path>
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
+							<version>1.18.38</version>
 						</path>
 					</annotationProcessorPaths>
 				</configuration>

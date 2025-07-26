@@ -5,25 +5,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
-@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Comment {
-
+@Entity
+public class Reel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String content;
+    private String title;
+    private String video;
+
     @ManyToOne
     private User user;
-    @ManyToMany
-    private List<User> liked=new ArrayList<>();
-    private LocalDateTime createdAt;
-
 }

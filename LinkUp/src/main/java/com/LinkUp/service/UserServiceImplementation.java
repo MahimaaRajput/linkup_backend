@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserServiceImplement implements UserService {
+public class UserServiceImplementation implements UserService {
     @Autowired
     private UserRepository userRepository;
 
@@ -23,10 +23,10 @@ public class UserServiceImplement implements UserService {
     @Override
     public User findUserById(Integer id) throws Exception {
         Optional<User> finduser = userRepository.findById(id);
-        if(finduser.isPresent()) {
+        if (finduser.isPresent()) {
             return finduser.get();
         } else {
-            throw new Exception("user not exist with id "+id);
+            throw new Exception("user not exist with id " + id);
         }
     }
 
@@ -37,10 +37,10 @@ public class UserServiceImplement implements UserService {
 
     @Override
     public User followUser(Integer reqUserId, Integer followingId) throws Exception {
-        User reqUser=findUserById(reqUserId);
-        User following1=findUserById(followingId);
+        User reqUser = findUserById(reqUserId);
+        User following1 = findUserById(followingId);
 //        null check & initialization
-        if (following1.getFollowers() ==null)
+        if (following1.getFollowers() == null)
             following1.setFollowers(new ArrayList<>());
         if (reqUser.getFollowing() == null)
             reqUser.setFollowing(new ArrayList<>());
@@ -54,7 +54,7 @@ public class UserServiceImplement implements UserService {
     }
 
     @Override
-    public User updateUser(Integer myid,User updateduser) throws Exception {
+    public User updateUser(Integer myid, User updateduser) throws Exception {
         Optional<User> findUser = userRepository.findById(myid);
         if (findUser.isEmpty()) {
             throw new Exception("user not found with id " + myid);
@@ -79,8 +79,20 @@ public class UserServiceImplement implements UserService {
 
     @Override
     public User findUserByJwt(String jwt) {
-        String email= JwtProvider.getEmailFromToken(jwt);
-        User user=userRepository.findByEmail(email);
+        String email = JwtProvider.getEmailFromToken(jwt);
+        User user = userRepository.findByEmail(email);
         return user;
+    }
+
+    @Override
+    public String deleteUser(Integer id) throws Exception {
+        Optional<User> finduser=userRepository.findById(id);
+        if(finduser.isPresent()) {
+            userRepository.delete(finduser.get());
+            return "user deleted succefully";
+        } else {
+            throw new Exception("user not exist with id " + id);
+        }
+
     }
 }

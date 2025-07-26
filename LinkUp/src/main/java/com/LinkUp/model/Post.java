@@ -1,6 +1,7 @@
 package com.LinkUp.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,18 +16,31 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
     private String caption;
     private String image;
     private String video;
-    private LocalDateTime createdAt;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "post_likes",
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    @JsonIgnoreProperties({"password", "followers", "following", "savedPost", "liked"})
+    private List<User> liked = new ArrayList<>();
+
+    @OneToMany
+    private List<Comment> comments = new ArrayList<>();
+
     @ManyToOne
     private User user;
-    @JsonIgnore
-    @OneToMany
-    private List<User> liked =new ArrayList<>();
 
-    public Post(String caption, LocalDateTime createdAt, Integer id, String image, List<User> liked, User user, String video) {
+    private LocalDateTime createdAt;
+
+    public Post(String caption, List<Comment> comments, LocalDateTime createdAt, Integer id, String image, List<User> liked, User user, String video) {
         this.caption = caption;
+        this.comments = comments;
         this.createdAt = createdAt;
         this.id = id;
         this.image = image;
@@ -34,8 +48,9 @@ public class Post {
         this.user = user;
         this.video = video;
     }
-    public Post()
-    {
+
+
+    public Post() {
 
     }
 
@@ -95,7 +110,13 @@ public class Post {
         this.video = video;
     }
 
+    public List<Comment> getComments() {
+        return comments;
+    }
 
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 
 
 }

@@ -79,8 +79,8 @@ public class PostServiceImplementation implements PostService {
     public Post likedPost(Integer postId, Integer userId) throws Exception {
         Post foundpost=findPostById(postId);
         User founduser=userService.findUserById(userId);
-        if(foundpost.getLiked()==null)
-            foundpost.setLiked(new ArrayList<>());
+//        if(foundpost.getLiked()==null)
+//            foundpost.setLiked(new ArrayList<>());
         if(foundpost.getLiked().contains(founduser))
         {
             foundpost.getLiked().remove(founduser);

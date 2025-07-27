@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Reel {
+public class Reels {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

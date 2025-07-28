@@ -1,0 +1,12 @@
+package com.LinkUp.service;
+
+import com.LinkUp.model.Chat;
+import com.LinkUp.model.User;
+
+import java.util.List;
+
+public interface Chatservice {
+    Chat createChat(User reqUser,User user2);
+    Chat fndChatById(Integer chatId) throws Exception;
+    List<Chat> findUsersChat(Integer userId);
+}

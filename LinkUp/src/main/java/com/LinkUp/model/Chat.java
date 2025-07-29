@@ -24,5 +24,7 @@ public class Chat {
 
     @ManyToMany
     private List<User> user = new ArrayList<>();
+    @OneToMany(mappedBy = "chat")
+    private List<Message> messages=new ArrayList<>();
 
 }

@@ -1,5 +1,7 @@
 package com.LinkUp.controller;
 
+import com.LinkUp.Exceptions.PostException;
+import com.LinkUp.Exceptions.UserException;
 import com.LinkUp.model.Post;
 import com.LinkUp.model.User;
 import com.LinkUp.response.ApiResponse;
@@ -20,7 +22,7 @@ public class PostController {
     @Autowired
     private PostService postService;
     @PostMapping("/api/create")
-    public ResponseEntity<Post> createPost(@RequestHeader("Authorization")String jwt,@RequestBody Post post) throws Exception {
+    public ResponseEntity<Post> createPost(@RequestHeader("Authorization")String jwt,@RequestBody Post post) throws PostException , UserException {
         try {
             User reqUser=userService.findUserByJwt(jwt);
             Post createdPost = postService.createPost(post,reqUser.getId());
@@ -51,17 +53,15 @@ public class PostController {
         return new ResponseEntity<>(posts,HttpStatus.FOUND);
     }
     @GetMapping("api/postid/{postId}")
-    public ResponseEntity<Post> findPostById(@PathVariable Integer postId) throws Exception
+    public ResponseEntity<Post> findPostById(@PathVariable Integer postId) throws PostException
     {
-        try
-        {
-            Post posts =postService.findPostById(postId);
+           Post posts =postService.findPostById(postId);
+            if(posts==null) {
+                throw  new PostException("post not found with id: " +postId);
+            }
+
             return new ResponseEntity<>(posts,HttpStatus.FOUND);
-        }
-        catch (Exception e)
-        {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+
     }
     @GetMapping("api/all")
     public ResponseEntity<List<Post>> findAllPost()
@@ -70,21 +70,19 @@ public class PostController {
         return new  ResponseEntity<>(posts,HttpStatus.FOUND);
     }
     @PutMapping("api/save/postid/{postId}")
-    public ResponseEntity<Post> savedPost(@PathVariable Integer postId, @RequestHeader("Authorization")String jwt)
-    {
-        try
-        {
+    public ResponseEntity<Post> savedPost(@PathVariable Integer postId, @RequestHeader("Authorization")String jwt) throws PostException, UserException {
+
             User reqUser=userService.findUserByJwt(jwt);
             Post posts=postService.savedPost(postId,reqUser.getId());
-            return new ResponseEntity<>(posts,HttpStatus.OK);
+        if (posts == null) {
+            throw new PostException("Post not found with id: " + postId);
         }
-        catch (Exception e)
-        {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+
+        return new ResponseEntity<>(posts,HttpStatus.OK);
+
     }
     @PutMapping("api/like/postid/{postId}")
-    public ResponseEntity<Post> likedPost(@PathVariable Integer postId,@RequestHeader("Authorization")String jwt) throws Exception {
+    public ResponseEntity<Post> likedPost(@PathVariable Integer postId,@RequestHeader("Authorization")String jwt) throws PostException, UserException {
 
 
             User reqUser=userService.findUserByJwt(jwt);

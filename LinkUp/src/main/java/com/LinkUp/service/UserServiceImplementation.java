@@ -1,6 +1,7 @@
 package com.LinkUp.service;
 
 import com.LinkUp.Config.JwtProvider;
+import com.LinkUp.Exceptions.UserException;
 import com.LinkUp.model.User;
 import com.LinkUp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,22 +22,26 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public User findUserById(Integer id) throws Exception {
+    public User findUserById(Integer id) throws UserException {
         Optional<User> finduser = userRepository.findById(id);
         if (finduser.isPresent()) {
             return finduser.get();
         } else {
-            throw new Exception("user not exist with id " + id);
+            throw new UserException("user not exist with id " + id);
         }
     }
 
     @Override
-    public User findUserByEmail(String email) throws Exception {
-        return userRepository.findByEmail(email);
+    public User findUserByEmail(String email) throws UserException {
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new UserException("User not found with email: " + email);
+        }
+        return user;
     }
 
     @Override
-    public User followUser(Integer reqUserId, Integer followingId) throws Exception {
+    public User followUser(Integer reqUserId, Integer followingId) throws UserException {
         User reqUser = findUserById(reqUserId);
         User following1 = findUserById(followingId);
 //        null check & initialization
@@ -54,10 +59,10 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public User updateUser(Integer myid, User updateduser) throws Exception {
+    public User updateUser(Integer myid, User updateduser) throws UserException {
         Optional<User> findUser = userRepository.findById(myid);
         if (findUser.isEmpty()) {
-            throw new Exception("user not found with id " + myid);
+            throw new UserException("user not found with id " + myid);
         }
         User existingUser = findUser.get();
         if (updateduser.getEmail() != null)
@@ -85,13 +90,13 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public String deleteUser(Integer id) throws Exception {
+    public String deleteUser(Integer id) throws UserException {
         Optional<User> finduser=userRepository.findById(id);
         if(finduser.isPresent()) {
             userRepository.delete(finduser.get());
             return "user deleted succefully";
         } else {
-            throw new Exception("user not exist with id " + id);
+            throw new UserException("user not exist with id " + id);
         }
 
     }

@@ -1,5 +1,7 @@
 package com.LinkUp.service;
 
+import com.LinkUp.Exceptions.PostException;
+import com.LinkUp.Exceptions.UserException;
 import com.LinkUp.model.Post;
 import com.LinkUp.model.User;
 import com.LinkUp.repository.PostRepository;
@@ -23,7 +25,7 @@ public class PostServiceImplementation implements PostService {
     private UserRepository userRepository;
 
     @Override
-    public Post createPost(Post post, Integer userId) throws Exception {
+    public Post createPost(Post post, Integer userId) throws PostException , UserException {
         User user= userService.findUserById(userId);
         post.setUser(user);
         post.setCreatedAt(LocalDateTime.now());
@@ -35,7 +37,7 @@ public class PostServiceImplementation implements PostService {
        Post foundpost=findPostById(postId);
        User founduser=userService.findUserById(userId);
        if (foundpost.getUser() == null || !foundpost.getUser().getId().equals(userId)) {
-            throw new Exception("you are not allowed to delete");
+            throw new PostException("you are not allowed to delete");
        }
        postRepository.delete(foundpost);
        return "post deleted with id "+ postId;
@@ -47,10 +49,10 @@ public class PostServiceImplementation implements PostService {
     }
 
     @Override
-    public Post findPostById(Integer postId) throws Exception {
+    public Post findPostById(Integer postId) throws PostException {
         Optional<Post> foundpost=postRepository.findById(postId);
         if(foundpost.isEmpty()) {
-            throw new Exception("post not found with id"+postId);
+            throw new PostException("post not found with id"+postId);
         }
         return foundpost.get();
     }
@@ -61,7 +63,7 @@ public class PostServiceImplementation implements PostService {
     }
 
     @Override
-    public Post savedPost(Integer postId, Integer userId) throws Exception {
+    public Post savedPost(Integer postId, Integer userId) throws PostException,UserException {
         Post foundpost=findPostById(postId);
         User founduser=userService.findUserById(userId);
         if(founduser.getSavedPost().contains(foundpost))
@@ -76,7 +78,7 @@ public class PostServiceImplementation implements PostService {
     }
 
     @Override
-    public Post likedPost(Integer postId, Integer userId) throws Exception {
+    public Post likedPost(Integer postId, Integer userId) throws PostException ,UserException{
         Post foundpost=findPostById(postId);
         User founduser=userService.findUserById(userId);
 //        if(foundpost.getLiked()==null)

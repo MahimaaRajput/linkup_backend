@@ -1,5 +1,6 @@
 package com.LinkUp.service;
 
+import com.LinkUp.Exceptions.ChatException;
 import com.LinkUp.model.Chat;
 import com.LinkUp.model.User;
 import com.LinkUp.repository.ChatRepository;
@@ -34,11 +35,11 @@ public class ChatServiceImplementation implements Chatservice {
     }
 
     @Override
-    public Chat fndChatById(Integer chatId) throws Exception {
+    public Chat fndChatById(Integer chatId) throws ChatException {
          Optional<Chat> opt=chatRepository.findById(chatId);
          if(opt.isEmpty())
          {
-             throw new Exception("chat not found by id " +chatId);
+             throw new ChatException("chat not found with id " +chatId);
          }
          return opt.get();
     }

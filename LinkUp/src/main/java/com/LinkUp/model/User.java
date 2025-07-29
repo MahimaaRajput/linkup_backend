@@ -1,5 +1,6 @@
 package com.LinkUp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,7 +25,9 @@ public class User {
     private String password;
     private List<Integer> followers = new ArrayList<>();
     private List<Integer> following=new ArrayList<>();
+
     @ManyToMany
+    @JsonIgnore
     private List<Post> savedPost=new ArrayList<>();
 
 

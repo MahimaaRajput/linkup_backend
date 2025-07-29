@@ -1,5 +1,6 @@
 package com.LinkUp.controller;
 
+import com.LinkUp.Exceptions.UserException;
 import com.LinkUp.model.User;
 import com.LinkUp.repository.UserRepository;
 import com.LinkUp.service.UserService;
@@ -31,18 +32,18 @@ public class UserController {
     }
 
     @GetMapping("/api/user/email/{email}")
-    public User getUserByEmail(@PathVariable String email) throws Exception {
+    public User getUserByEmail(@PathVariable String email) throws UserException {
         return userService.findUserByEmail(email);
     }
 
     @PutMapping("/api/user")
-    public User updateUser(@RequestHeader("Authorization") String jwt, @RequestBody User updateduser) throws Exception {
+    public User updateUser(@RequestHeader("Authorization") String jwt, @RequestBody User updateduser) throws UserException {
         User reqUser = userService.findUserByJwt(jwt);
         return userService.updateUser(reqUser.getId(), updateduser);
     }
 
     @PutMapping("/api/users/follow/{followingId}")
-    public User followUser(@RequestHeader("Authorization") String jwt, @PathVariable Integer followingId) throws Exception {
+    public User followUser(@RequestHeader("Authorization") String jwt, @PathVariable Integer followingId) throws UserException {
         User reqUser = userService.findUserByJwt(jwt);
         return userService.followUser(reqUser.getId(), followingId);
     }
@@ -54,7 +55,7 @@ public class UserController {
     }
 
     @DeleteMapping("api/user/delete")
-    public String deleteUser(@RequestHeader("Authorization") String jwt) throws Exception {
+    public String deleteUser(@RequestHeader("Authorization") String jwt) throws UserException {
         User reqUser = userService.findUserByJwt(jwt);
           return userService.deleteUser(reqUser.getId());
 

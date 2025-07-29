@@ -1,5 +1,7 @@
 package com.LinkUp.controller;
 
+import com.LinkUp.Exceptions.ChatException;
+import com.LinkUp.Exceptions.UserException;
 import com.LinkUp.model.Chat;
 import com.LinkUp.model.User;
 import com.LinkUp.repository.ChatRepository;
@@ -20,7 +22,7 @@ public class ChatController {
     private UserService userService;
 
     @PostMapping("api/create")
-    public Chat createChat(@RequestHeader("Authorization")String jwt, @RequestBody ChatRequest req) throws Exception {
+    public Chat createChat(@RequestHeader("Authorization")String jwt, @RequestBody ChatRequest req) throws ChatException, UserException {
         User reqUser =userService.findUserByJwt(jwt);
         User user2=userService.findUserById(req.getUserId());
         return chatservice.createChat(reqUser,user2);

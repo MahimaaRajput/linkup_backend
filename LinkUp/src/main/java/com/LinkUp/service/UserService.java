@@ -1,5 +1,6 @@
 package com.LinkUp.service;
 
+import com.LinkUp.Exceptions.UserException;
 import com.LinkUp.model.User;
 
 import java.util.List;
@@ -7,18 +8,18 @@ import java.util.List;
 public interface UserService {
     User registerUser(User user);
 
-    User findUserById(Integer id) throws Exception;
+    User findUserById(Integer id) throws UserException;
 
-    User findUserByEmail(String email) throws Exception;
+    User findUserByEmail(String email) throws UserException;
 
-    User followUser(Integer followerId, Integer followingId) throws Exception;
+    User followUser(Integer followerId, Integer followingId) throws UserException;
 
-    User updateUser(Integer id, User user) throws Exception;
+    User updateUser(Integer id, User user) throws UserException;
 
     List<User> searchUser(String query);
 
     User findUserByJwt(String jwt);
 
-    String deleteUser(Integer id) throws Exception;
+    String deleteUser(Integer id) throws UserException;
 
 }
